@@ -21,3 +21,4 @@ plt.rcParams['axes.unicode_minus']=False
 plt.plot(range(1,61),P[0:60])
 plt.grid()
 plt.show()
+#模型解释见https://zhuanlan.zhihu.com/p/103957123
