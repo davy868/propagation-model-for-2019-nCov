@@ -88,3 +88,4 @@ plt.plot(range(50,80),gammaN[49:79])
 plt.grid()
 
 plt.show()
+#模型解释见https://zhuanlan.zhihu.com/p/104375151
