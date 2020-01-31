@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 gamma=0.55
@@ -13,7 +14,7 @@ for j in range(300-Q):
         P[j+Q]-=P[j+Q-D-Q]*gamma
     if j+Q==D:
         P[j+Q]-=1
-plt.xlabel("N")
+plt.xlabel("N.")
 plt.ylabel("PN")
 plt.rcParams['font.sans-serif']=['SimHei']
 plt.rcParams['axes.unicode_minus']=False
