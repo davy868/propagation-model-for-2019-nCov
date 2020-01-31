@@ -1,0 +1,90 @@
+import numpy as np
+import matplotlib.pyplot as plt
+Seed=1
+gamma=0.396
+Q=3
+D=10
+P=np.zeros(300,dtype=np.float)
+Psum=np.zeros(300,dtype=np.float)
+DN=np.zeros(300,dtype=np.float32)
+gammaN=np.zeros(300,dtype=np.float32)
+for i in range(55):
+    DN[i]=D
+    gammaN[i]=gamma
+
+for i in range(55,62):
+    DN[i]=10-(i-54)*7/7
+for i in range(55,62):
+    gammaN[i]=0.396-(i-54)*(0.396-0.1672)/7
+for i in range(62,290):
+    gammaN[i]=0.1672
+for i in range(62,290):
+    DN[i]=3
+    
+for i in range(Q):
+    P[i]=Seed
+for j in range(300-Q):
+    if j-1==-1:
+        P[j+Q]=P[j+Q-1]+Seed*gamma
+    else:
+        P[j+Q]=P[j+Q-1]+P[j-1]*gammaN[j-1]
+        
+    if j+Q-DN[j+Q]-Q-1>=0 and j+Q<55:
+        P[j+Q]-=P[int(j+Q-DN[j+Q]-Q-1)]*gammaN[int(j+Q-DN[j+Q]-Q-1)]
+        
+    if   j+Q>=55  and j+Q<62:
+        t= j+Q-54
+        P[j+Q]-=(P[int(j+Q-D-Q-1+t-1)]*gammaN[int(j+Q-D-Q-1+t-1)]+P[int(j+Q-D-Q-1+t)]*gammaN[int(j+Q-D-Q-1+t)])
+            
+    if int(j+Q-DN[j+Q]-Q-1)==-Q-1 or  int(j+Q-DN[j+Q]-Q-1)==-1:
+        P[j+Q]-=Seed
+    if j+Q>=62:
+        P[j+Q]-=P[int(j+Q-DN[j+Q]-Q-1)]*gammaN[int(j+Q-DN[j+Q]-Q-1)]
+        
+print("1737")        
+print(P[55]-P[54])
+print(P[56]-P[55])
+
+plt.figure(1)
+plt.xlabel("N")
+plt.ylabel("△PN")
+plt.rcParams['font.sans-serif']=['SimHei']
+plt.rcParams['axes.unicode_minus']=False
+plt.annotate('N=56  1月23日',(82.3,-500))
+plt.annotate('N=57  1月24日',(82.3,-800))
+plt.annotate('N=58  1月25日',(82.3,-1100))
+plt.annotate('N=59  1月26日',(82.3,-1400))
+plt.annotate('N=60  1月27日',(82.3,-1700))
+plt.annotate('N=63  1月30日',(82.3,-2000))
+plt.annotate('N=80  2月16日',(82.3,-2300))
+plt.annotate('N=90  2月26日',(82.3,-2600))
+plt.annotate('N=100  3月08日',(82.3,-2900))
+plt.plot(range(50,102),P[49:101]-P[48:100])
+plt.grid()
+plt.show()
+
+
+plt.figure(2)
+plt.xlabel("N")
+plt.ylabel("PN")
+plt.rcParams['font.sans-serif']=['SimHei']
+plt.rcParams['axes.unicode_minus']=False
+plt.annotate('N=1   11月29日',(11,18000))
+plt.annotate('N=62  1月29日',(11,14000))
+plt.annotate('N=63  1月30日',(11,12000))
+plt.annotate('N=80  2月16日',(11,8000))
+plt.annotate('N=100  3月8日',(11,4000))
+
+plt.plot(range(1,101),P[:100])
+plt.grid()
+plt.show()
+print(P[62])
+
+plt.figure(3)
+plt.plot(range(50,80),DN[49:79])
+plt.grid()
+plt.figure(4)
+plt.plot(range(50,80),gammaN[49:79])
+plt.grid()
+
+plt.show()
